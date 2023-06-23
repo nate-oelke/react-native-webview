@@ -194,6 +194,10 @@ namespace winrt::ReactNativeWebView::implementation {
     void ReactWebView2::OnCoreWebView2Initialized(winrt::Microsoft::UI::Xaml::Controls::WebView2 const& sender, winrt::Microsoft::UI::Xaml::Controls::CoreWebView2InitializedEventArgs const& /* args */) {
         assert(sender.CoreWebView2());
 
+        // Hide tool bar save and print options 
+        auto settings = m_webView.CoreWebView2().Settings();
+        settings.HiddenPdfToolbarItems(CoreWebView2PdfToolbarItems::Save | CoreWebView2PdfToolbarItems::SaveAs | CoreWebView2PdfToolbarItems::Print);
+
         if (m_navigateToHtml != L"") {
             m_webView.NavigateToString(m_navigateToHtml);
             m_navigateToHtml = L"";
