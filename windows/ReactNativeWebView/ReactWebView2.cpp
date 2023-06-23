@@ -198,6 +198,11 @@ namespace winrt::ReactNativeWebView::implementation {
         auto settings = m_webView.CoreWebView2().Settings();
         settings.HiddenPdfToolbarItems(CoreWebView2PdfToolbarItems::Save | CoreWebView2PdfToolbarItems::SaveAs | CoreWebView2PdfToolbarItems::Print);
 
+        // Hide right click options containing "save as"
+        m_webView.CoreWebView2().ContextMenuRequested([](auto&&, auto&& args) {
+            args.Handled(true);
+        });
+
         if (m_navigateToHtml != L"") {
             m_webView.NavigateToString(m_navigateToHtml);
             m_navigateToHtml = L"";
